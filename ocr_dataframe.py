@@ -300,8 +300,6 @@ def predict(file):
         col = each_dot[1]
         img_dot[row, col] = 0
 
-    idx = np.argwhere(img_dot == 0)  # 点的坐标
-
     # 点图
     plt.imshow(img_dot, plt.cm.gray)
     plt.show()
@@ -401,17 +399,12 @@ def predict(file):
                         break
                     down_line = img_rows[row_next,col_cur:col_next]
 
-                    #print('下面的线和为 {}'.format(np.sum(down_line)))
                     if np.sum(down_line) == 0:
 
                         sub_img = img_binary[row_cur:row_next, col_cur:col_next]
                         sub_item = Cell(sub_img, (row_cur, col_cur))
                         cell_items.append(sub_item)
-                        flag = True
-                        # print('成功')
                         break
-                        # else:
-                        # print('失败')
                 break
 
     '''更新切分'''
@@ -480,9 +473,7 @@ def predict(file):
         except:
             value = np.NAN
 
-        # print(t)
         print(value)
-        # print(row_index,col_index)
         df.iloc[row_index, col_index] = value
 
     df.to_excel('result_df.xlsx',index=False)
